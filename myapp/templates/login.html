@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Travel.pl</title>
+    <link rel="stylesheet" href="style.css">  
+    <title>Home - Travel.pl</title> 
+    <style>
+    .container {
+        width: 40%; 
+        margin: 100px auto;
+        padding: 30px; 
+        background-color: #f2f2f2; 
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    }
+    
+    h2 {
+        color: #003366; 
+        text-align: center;
+        font-size: 24px; 
+        margin-bottom: 30px; 
+        text-transform: uppercase; 
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        color: #003366; 
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {    
+        width: 100%; 
+        padding: 12px;
+        border: 1px solid #003366; 
+        border-radius: 5px;
+        margin-top: 5px;
+        box-sizing: border-box; 
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #003366; 
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #001a33; 
+    }
+
+
+
+    .navbar-custom {
+        background-color: #f0f8ff; 
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 10px 20px; 
+    }
+    
+    .navbar-custom .navbar-brand {
+        color: #555; 
+        font-weight: bold; 
+        text-decoration: none; 
+        font-size: 34px; 
+    }
+    
+    .navbar-custom .navbar-nav {
+        display: flex; 
+        list-style-type: none; 
+    }
+    
+    .navbar-custom .navbar-nav .nav-item {
+        margin-right: 10px; 
+    }
+    
+    .navbar-custom .navbar-nav .nav-link {
+        color: #555; 
+        text-decoration: none; 
+        font-size: 20px; 
+        margin: 15px;
+    }
+    
+    .navbar-custom .navbar-nav .nav-link:hover {
+        color: #4682b4; 
+    }
+    
+    .navbar-custom .navbar-toggler-icon {
+        background-color: #6b8e23; 
+    }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-custom"> 
+        <a class="navbar-brand" href="/">Travel.pl</a> 
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registration">Zarejestruj się</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="container">
+    <h2>Logowanie</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło:</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Zaloguj</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
