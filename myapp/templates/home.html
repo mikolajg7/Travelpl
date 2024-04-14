@@ -74,9 +74,21 @@
             </ul>
         </div>
     </nav>
-<div class="container">
-    <p>Welcome to my app!</p>
-</div>
+    <h1>Create a New Post</h1>
+    <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Title"><br>
+    <textarea name="body" rows="4" cols="50"></textarea><br>
+    <input type="file" name="image"><br>
+    <button type="submit">Submit</button>
+</form>
+    <hr>
+    <h2>Posts</h2>
+    <ul>
+        {% for post in posts %}
+                <li>{{ post.body }}</li>
+            {% endfor %}
+    </ul>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
