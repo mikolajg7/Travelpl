@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="style.css">  
     <title>Home - Travel.pl</title> 
     <style>
+        .create-post, .posts {
+        font-size: 2em; /* Makes the text 2 times bigger */
+        text-align: center; /* Centers the text */
+        }
         .navbar-custom {
             background-color: #f0f8ff; 
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
@@ -83,21 +87,34 @@
         }
 
         .container {
-            margin: 20px auto;
-            max-width: 800px;
+        width: 50%;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
         }
 
-        select, button {
-            font-size: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+        select, input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
         }
 
         button {
-            background-color: #4682b4;
-            color: #fff;
-            cursor: pointer;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        }
+
+        button:hover {
+        background-color: #0056b3;
         }
 
         img {
@@ -132,6 +149,14 @@
             </ul>
         </div>
     </nav>
+    <script>
+        window.onload = function() {
+            var select = document.getElementById('post_count');
+            select.onchange = function() {
+                this.form.submit();
+            };
+        };
+    </script>
     <div class="container">
         <form method="get" action="{% url 'home' %}">
             <label for="post_count">Select number of posts:</label>
@@ -142,12 +167,20 @@
                 <option value="20" {% if post_count == 20 %}selected{% endif %}>20</option>
                 <option value="25" {% if post_count == 25 %}selected{% endif %}>25</option>
             </select>
-            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="container">
+        <form method="get" action="{% url 'home2' %}">
+            <label for="min_chars">Min characters:</label>
+            <input type="number" name="min_chars" id="min_chars">
+            <label for="max_chars">Max characters:</label>
+            <input type="number" name="max_chars" id="max_chars">
+            <button type="submit">Filter</button>
         </form>
     </div>
 
     <div class="container">
-        <h1 class="navbar-link">Create a New Post</h1>
+        <h1 class="create-post">Create a New Post</h1>
         <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="text" name="title" placeholder="Title">
@@ -159,7 +192,7 @@
 
     <div class="container">
         <hr>
-        <h2 class="navbar-link">Posts</h2>
+        <h2 class="posts">Posts</h2>
         {% for post in posts %}
             <div class="post">
                 <h2>{{ post.title }}</h2>
