@@ -12,7 +12,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from .models import Post
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 
 random_posts=list(get_random_posts()[:50])  # Get 50 random posts
 def home(request):
@@ -51,10 +51,6 @@ def login_view(request):
 
     return render(request, 'login.html')
 
-def add_comment(request, post_id):
-  
-
-
 
 def registration_view(request):
     if request.method == "POST":
@@ -83,6 +79,7 @@ def registration_view(request):
         myuser = User.objects.create_user(username, email, pass1)
         myuser.save()
         send_mail('Witaj!',"Dziękujemy ci za zarejestrowanie sie na naszej aplikacji Travelpl!",'settings.EMAIL_HOST_USER',emaillist,fail_silently=False)
+        messages.success(request,'Rejestracja się udała!')
         return redirect('login')
     
     return render(request, 'registration.html')

@@ -174,13 +174,6 @@
                     <p>No comments yet.</p>
                 {% endif %}
                 <hr>
-                <h3>Add a comment</h3>
-            <form method="post" action="{% url 'add_comment'%}">
-                {% csrf_token %}
-                <input type="text" name="email" placeholder="Your email">
-                <textarea name="body" placeholder="Your comment"></textarea>
-                <button type="submit">Submit</button>
-            </form>
             </div>
         {% endfor %}
     </div>
