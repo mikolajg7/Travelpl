@@ -13,6 +13,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from .models import Post
 from django.shortcuts import render, redirect
+from django.db.models import Q
+from django.db import models
 
 random_posts=list(get_random_posts()[:50])  # Get 50 random posts
 def home(request):
@@ -20,6 +22,27 @@ def home(request):
     posts = random_posts[:post_count] # Get the last 5 posts and convert to list
     return render(request, 'home.html', {'posts': posts})
 
+
+from django.db.models import Func, IntegerField
+
+class Length(Func):
+    function = 'LENGTH'
+    output_field = IntegerField()
+    
+def home2(request):
+    min_chars = request.GET.get('min_chars')
+    max_chars = request.GET.get('max_chars')
+
+    posts = Post.objects.all()
+
+    if min_chars or max_chars:
+        posts = posts.annotate(body_length=Length('body'))
+        if min_chars:
+            posts = posts.filter(body_length__gte=min_chars)
+        if max_chars:
+            posts = posts.filter(body_length__lte=max_chars)
+
+    return render(request, 'home.html', {'posts': posts})
 
 def add_post(request):
     if request.method == 'POST':
