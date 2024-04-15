@@ -45,7 +45,45 @@
         .navbar-custom .navbar-toggler-icon {
             background-color: #6b8e23; 
         }
-        
+        .post, .post-form, .navbar-link {
+            font-size: 22px;
+            color: #555;
+            text-align: center; 
+        }
+
+        .post, .post-form {
+            background-color: #f0f8ff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: inline-block; 
+        }
+
+        .post-form {
+            margin: 0 auto; 
+            max-width: 500px; 
+        }
+
+        .post-form input[type="text"],
+        .post-form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+
+        .post-form button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #4682b4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -74,22 +112,34 @@
             </ul>
         </div>
     </nav>
-    <h1>Create a New Post</h1>
-    <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="text" name="title" placeholder="Title"><br>
-    <textarea name="body" rows="4" cols="50"></textarea><br>
-    <input type="file" name="image"><br>
-    <button type="submit">Submit</button>
-</form>
-    <hr>
-    <h2>Posts</h2>
-    <ul>
-        {% for post in posts %}
-                <li>{{ post.body }}</li>
+
+    <div class="container">
+        <h1 class="navbar-link">Create a New Post</h1>
+        <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data" class="post-form">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Title"><br>
+            <textarea name="body" rows="4" cols="50"></textarea><br>
+            <input type="file" name="image"><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <hr>
+        <h2 class="navbar-link">Posts</h2>
+        <ul>
+            {% for post in posts %}
+                <li class="post">{{ post.body }}</li>
             {% endfor %}
-    </ul>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
+
+
