@@ -10,23 +10,30 @@ from .models import Post
 import requests
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from .models import Post
+from django.shortcuts import render, redirect
 
-posts = get_random_posts()[:5]
+random_posts=list(get_random_posts()[:50])  # Get 50 random posts
 def home(request):
-    if 'new_post' in request.session:
-        new_post_id = request.session['new_post']['id']
-        new_post = Post.objects.get(id=new_post_id)
-        posts.insert(0, model_to_dict(new_post))
-        del request.session['new_post']
+    post_count = int(request.GET.get('post_count', 5))  # Domyślnie wybieramy 5 postów
+    posts = random_posts[:post_count] # Get the last 5 posts and convert to list
     return render(request, 'home.html', {'posts': posts})
+
 
 def add_post(request):
     if request.method == 'POST':
+        title = request.POST.get('title')
         content = request.POST.get('body')
-        new_post = Post.objects.create(body=content)
-        request.session['new_post'] = model_to_dict(new_post)
+        image = request.FILES.get('image') if 'image' in request.FILES else None
+        new_post = Post.objects.create(title=title, body=content, image=image)
+        new_post.save()
+        request.session['new_post'] = {'id': new_post.id, 'title': new_post.title}
+        new_post_id = request.session['new_post']['id']
+        new_post = Post.objects.get(id=new_post_id)
+        random_posts.insert(0, new_post)
         return redirect('home')
-
+    return render(request, 'home.html')
 
 def login_view(request):
     if request.method == "POST":
@@ -43,8 +50,6 @@ def login_view(request):
 
 
     return render(request, 'login.html')
-
-
 
 
 def registration_view(request):
@@ -74,6 +79,7 @@ def registration_view(request):
         myuser = User.objects.create_user(username, email, pass1)
         myuser.save()
         send_mail('Witaj!',"Dziękujemy ci za zarejestrowanie sie na naszej aplikacji Travelpl!",'settings.EMAIL_HOST_USER',emaillist,fail_silently=False)
+        messages.success(request,'Rejestracja się udała!')
         return redirect('login')
     
     return render(request, 'registration.html')

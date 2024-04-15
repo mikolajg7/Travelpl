@@ -49,9 +49,6 @@
             font-size: 22px;
             color: #555;
             text-align: center; 
-        }
-
-        .post, .post-form {
             background-color: #f0f8ff;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -84,6 +81,29 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        select, button {
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #4682b4;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -112,14 +132,27 @@
             </ul>
         </div>
     </nav>
+    <div class="container">
+        <form method="get" action="{% url 'home' %}">
+            <label for="post_count">Select number of posts:</label>
+            <select name="post_count" id="post_count">
+                <option value="5" {% if post_count == 5 %}selected{% endif %}>5</option>
+                <option value="10" {% if post_count == 10 %}selected{% endif %}>10</option>
+                <option value="15" {% if post_count == 15 %}selected{% endif %}>15</option>
+                <option value="20" {% if post_count == 20 %}selected{% endif %}>20</option>
+                <option value="25" {% if post_count == 25 %}selected{% endif %}>25</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
     <div class="container">
         <h1 class="navbar-link">Create a New Post</h1>
-        <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data" class="post-form">
+        <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="text" name="title" placeholder="Title"><br>
-            <textarea name="body" rows="4" cols="50"></textarea><br>
-            <input type="file" name="image"><br>
+            <input type="text" name="title" placeholder="Title">
+            <textarea name="body" placeholder="Content"></textarea>
+            <input type="file" name="image">
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -127,19 +160,25 @@
     <div class="container">
         <hr>
         <h2 class="navbar-link">Posts</h2>
-        <ul>
-            {% for post in posts %}
-                <li class="post">{{ post.body }}</li>
-            {% endfor %}
-        </ul>
+        {% for post in posts %}
+            <div class="post">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.body }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image }}" alt="Post Image" style="width: 150px; height:150;">
+                {% endif %}
+                <h2>Comments</h2>
+                {% if post.comment %}
+                    <p>{{ post.comment_body }} - by {{ post.comment_email }}</p>
+                {% else %}
+                    <p>No comments yet.</p>
+                {% endif %}
+                <hr>
+            </div>
+        {% endfor %}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-
