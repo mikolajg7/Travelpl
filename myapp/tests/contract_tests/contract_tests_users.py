@@ -3,18 +3,18 @@ from django.test import TestCase
 
 class JSONPlaceholderUsersContractTest(TestCase):
 
-    # Contract test for the /users endpoint
+    # Test kontraktu dla punktu końcowego /users
     def test_users_endpoint(self):
         url = 'https://jsonplaceholder.typicode.com/users'
         response = requests.get(url)
 
-        # Check status code
+        # Sprawdzenie kodu statusu
         self.assertEqual(response.status_code, 200)
 
-        # Check headers
+        # Sprawdzenie nagłówków
         self.assertEqual(response.headers['Content-Type'], 'application/json; charset=utf-8')
 
-        # Check body structure
+        # Sprawdzenie struktury treści
         users = response.json()
         for user in users:
             self.assertIn('id', user)
