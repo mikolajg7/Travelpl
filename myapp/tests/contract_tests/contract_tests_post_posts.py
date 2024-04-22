@@ -3,7 +3,7 @@ from django.test import TestCase
 
 class JSONPlaceholderPostsContractTest(TestCase):
 
-    # Contract test for the POST /posts endpoint
+    # Test kontraktu dla punktu końcowego POST /posts
     def test_post_posts_endpoint(self):
         url = 'https://jsonplaceholder.typicode.com/posts'
         data = {
@@ -13,13 +13,13 @@ class JSONPlaceholderPostsContractTest(TestCase):
         }
         response = requests.post(url, data=data)
 
-        # Check status code
+        # Sprawdzenie kodu statusu
         self.assertEqual(response.status_code, 201)
 
-        # Check headers
+        # Sprawdzenie nagłówków
         self.assertEqual(response.headers['Content-Type'], 'application/json; charset=utf-8')
 
-        # Check body structure
+        # Sprawdzenie struktury treści
         post = response.json()
         self.assertIn('id', post)
-        self.assertEqual(post['id'], 101)  # JSONPlaceholder always returns an id of 101 for POST requests
+        self.assertEqual(post['id'], 101)  # JSONPlaceholder zawsze zwraca id równy 101 dla żądań POST
