@@ -12,13 +12,13 @@ class JSONPlaceholderPostsContractTest(TestCase):
         }
         response = requests.put(url, data=data)
 
-        # Check status code
+        # Sprawdzenie kodu statusu
         self.assertEqual(response.status_code, 200)
 
-        # Check headers
+        # Sprawdzenie nagłówków
         self.assertEqual(response.headers['Content-Type'], 'application/json; charset=utf-8')
 
-        # Check body structure
+        # Sprawdzenie struktury treści
         post = response.json()
-        post['userId'] = int(post['userId'])  # Convert userId to integer
-        self.assertEqual(post, data)  # JSONPlaceholder always returns the same input for PUT requests
+        post['userId'] = int(post['userId'])  # Konwersja userId na liczbę całkowitą
+        self.assertEqual(post, data)  # JSONPlaceholder zawsze zwraca ten sam input dla żądań PUT
