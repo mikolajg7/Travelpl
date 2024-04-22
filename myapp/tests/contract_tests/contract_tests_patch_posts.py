@@ -9,12 +9,12 @@ class JSONPlaceholderPostsContractTest(TestCase):
         }
         response = requests.patch(url, data=data)
 
-        # Check status code
+        # Sprawdzenie kodu statusu
         self.assertEqual(response.status_code, 200)
 
-        # Check headers
+        # Sprawdzenie nagłówków
         self.assertEqual(response.headers['Content-Type'], 'application/json; charset=utf-8')
 
-        # Check body structure
+        # Sprawdzenie struktury treści
         post = response.json()
-        self.assertEqual(post['title'], 'foo')  # JSONPlaceholder always returns the same input for PATCH requests
+        self.assertEqual(post['title'], 'foo')  # JSONPlaceholder zawsze zwraca tę samą wartość wejściową dla żądań PATCH
