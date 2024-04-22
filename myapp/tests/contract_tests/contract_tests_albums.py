@@ -3,18 +3,18 @@ from django.test import TestCase
 
 class JSONPlaceholderAlbumsContractTest(TestCase):
 
-    # Contract test for the /albums endpoint
+    # Test kontraktu dla punktu końcowego /albums
     def test_albums_endpoint(self):
         url = 'https://jsonplaceholder.typicode.com/albums'
         response = requests.get(url)
 
-        # Check status code
+        # Sprawdzenie kodu statusu
         self.assertEqual(response.status_code, 200)
 
-        # Check headers
+        # Sprawdzenie nagłówków
         self.assertEqual(response.headers['Content-Type'], 'application/json; charset=utf-8')
 
-        # Check body structure
+        # Sprawdzenie struktury treści
         albums = response.json()
         for album in albums:
             self.assertIn('userId', album)
