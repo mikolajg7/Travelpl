@@ -1,3 +1,4 @@
+# Travel.pl University Project
 This project is a collaborative effort between Mikołaj Golański and Konrad Kuś, developed as part of our coursework at the University of Economics in Katowice. The primary focus of this project is to conduct performance testing and optimization on web applications.
 
 # Overview
